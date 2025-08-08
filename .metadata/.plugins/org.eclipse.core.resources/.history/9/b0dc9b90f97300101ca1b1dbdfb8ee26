@@ -1,0 +1,13 @@
+package myTodoApp;
+import 
+import java.util.ArrayList;
+import java.util.Vector;
+
+public class TodoList {
+	private ArrayList<Task> tasksList;
+	public TodoList() {}
+	
+	public TodoList addTask(Task newTask) {
+		return this;
+	}
+}

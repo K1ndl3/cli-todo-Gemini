@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="java.util.Vector"/>
+    <fullyQualifiedTypeName name="jdk.internal.org.jline.utils.ShutdownHooks.Task"/>
+    <fullyQualifiedTypeName name="com.sun.org.apache.xml.internal.dtm.ref.DTMAxisIterNodeList"/>
+    <fullyQualifiedTypeName name="java.lang.TypeNotPresentException"/>
+    <fullyQualifiedTypeName name="java.lang.runtime.TemplateRuntime"/>
+    <fullyQualifiedTypeName name="java.util.Collection"/>
+    <fullyQualifiedTypeName name="jdk.internal.org.jline.terminal.Size"/>
+    <fullyQualifiedTypeName name="java.util.Collections"/>
+    <fullyQualifiedTypeName name="myTodoApp.Task"/>
+    <fullyQualifiedTypeName name="java.awt.Frame"/>
+    <fullyQualifiedTypeName name="java.util.ArrayList"/>
+    <fullyQualifiedTypeName name="java.lang.String"/>
+    <fullyQualifiedTypeName name="java.lang.LayerInstantiationException"/>
+    <fullyQualifiedTypeName name="java.security.PublicKey"/>
+    <fullyQualifiedTypeName name="com.sun.org.apache.xml.internal.serializer.ToTextSAXHandler"/>
+    <fullyQualifiedTypeName name="myTodoApp.TodoList"/>
+</qualifiedTypeNameHistroy>

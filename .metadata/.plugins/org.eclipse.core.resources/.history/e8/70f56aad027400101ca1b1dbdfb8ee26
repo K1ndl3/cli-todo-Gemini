@@ -1,0 +1,85 @@
+package myTodoApp;
+ 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+
+public class TodoList {
+	private List<Task> tasksList;
+	private int size;
+	public TodoList() {
+		this.tasksList = new ArrayList<Task>();
+		this.size = 0;
+	}
+	
+	public TodoList addTask(String taskTitle, String taskDetails) {
+		Task newTask = new Task(taskTitle, taskDetails);
+		size = tasksList.size();
+		tasksList.add(newTask);
+		return this;
+	}
+	
+	public TodoList deleteTask(int indexOfTask) {
+		if (indexOfTask >= size) {
+			System.err.println("ERROR: Invalid index. Try again");
+			return this;
+		}
+		tasksList.remove(indexOfTask);
+		size = tasksList.size();
+		System.out.println("SUCCESS: deleted task at index: " + indexOfTask);
+		return this;
+	}
+	
+	public TodoList moveUp(int indexOfTask) {
+		if (size < 2) {
+			System.err.println("ERROR: Cannot move task up. Not enough tasks.");
+			return this;
+		}
+		if (indexOfTask == 0 || indexOfTask >= size) {
+			System.err.println("ERROR: Ivalid index. Try again");
+			return this;
+		}
+		Collections.swap(tasksList, indexOfTask,  indexOfTask - 1);
+		System.out.println("SUCCESS: Moved task up.");
+		return this;
+	}
+	
+	public TodoList moveDown(int indexOfTask) {
+		if (size < 2) {
+			System.err.println("ERROR: Cannot move task down. Not enough tasks.");
+			return this;
+		}
+		if (indexOfTask == size - 1 || indexOfTask >= size) {
+			System.err.println("ERROR: Invalid index. Try again");
+			return this;
+		}
+		Collections.swap(tasksList, indexOfTask,  indexOfTask + 1);
+		System.out.println("SUCCESS: Moved task down.");
+		return this;
+	}
+	
+	public TodoList editTask(int indexOfTask, String newTaskTitle , String newTaskMessage) {
+		if (indexOfTask >= size) {
+			System.err.println("ERROR: Index is out of bounds. Try again.");
+		}
+		tasksList.get(indexOfTask).updateTask(newTaskMessage, newTaskTitle);
+		System.out.println("SUCCESS: edited task. ");
+		return this;
+	}
+	
+	public void printList() {
+		if (tasksList.isEmpty()) {
+			System.err.println("ERROR: List is empty. Add a task to display.");
+			return;
+			}
+		for (int i = 0; i < size; i++) {
+			System.out.println("Index: " + i);
+			System.out.println(" ** " + tasksList.get(i).getTaskTitle());
+			System.out.println("|");
+			System.out.println(" ---> " + tasksList.get(i).getTaskDetail());
+			System.out.println("/////////////////////////////////////////////////");
+		}
+		
+	}
+}

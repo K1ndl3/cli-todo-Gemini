@@ -1,0 +1,36 @@
+package myTodoApp;
+ 
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class TodoList {
+	private List<Task> tasksList;
+	public TodoList() {
+		tasksList = new ArrayList<Task>();
+	}
+	
+	public TodoList addTask(Task newTask) {
+		return this;
+	}
+	
+	public TodoList deleteTask(int indexOfTask) {
+		return this;
+	}
+	
+	public TodoList moveUp(int indexOfTask) {
+		return this;
+	}
+	
+	public TodoList moveDown(int indexOfTask) {
+		return this;
+	}
+	
+	public TodoList editTask(int indexOfTask, String newTaskMessage) {
+		return this;
+	}
+	
+	public void ListTask() {
+		
+	}
+}
