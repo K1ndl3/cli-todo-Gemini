@@ -1,7 +1,5 @@
 package myTodoApp;
 
-import java.util.Scanner;
-
 public class Main {
 
 	public static void main(String[] args) {
@@ -15,20 +13,6 @@ public class Main {
 		boolean running = false;
 		TodoList todoList = new TodoList();
 		System.out.println("Welcome Huy. Lets start your to-do list for today. Input 6 to start.");
-		Scanner input = new Scanner(System.in);
-		int userStartCommand = input.nextInt();
-		if (userStartCommand == 6) {
-			running = true;
-		}
-		while (running) {
-			int userChoice = input.nextInt();
-			todoList.printList();
-			switch(userChoice) {
-				 case(ADD_TASK):
-					 
-			}
-		}
-		
 		
 		
 		
