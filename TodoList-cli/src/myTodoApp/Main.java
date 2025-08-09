@@ -12,26 +12,116 @@ public class Main {
 		final int MOVE_TASK_DOWN = 4;
 		final int EDIT_TASK = 5;
 		final int START = 6;
+		
+		
+		
 		boolean running = false;
 		TodoList todoList = new TodoList();
 		System.out.println("Welcome Huy. Lets start your to-do list for today. Input 6 to start.");
 		Scanner input = new Scanner(System.in);
+		System.out.println("------------------------");
 		int userStartCommand = input.nextInt();
-		if (userStartCommand == 6) {
+		if (userStartCommand == START) {
 			running = true;
 		}
+		
 		while (running) {
-			int userChoice = input.nextInt();
-			todoList.printList();
-			switch(userChoice) {
-				 case(ADD_TASK):
-					 
+			try {
+				printPrompts();
+				int userChoice = input.nextInt();
+				input.nextLine();
+				switch(userChoice) {
+				case(ADD_TASK):
+					cleanScreen();
+				System.out.println("Enter the task title: ");
+				String taskTitle = input.nextLine();
+				System.out.println("Enter the task details: ");
+				String taskDetail = input.nextLine();
+				todoList.addTask(taskTitle, taskDetail);
+				displayList(todoList);
+				break;
+				case(DELETE_TASK):
+					cleanScreen();
+				System.out.println("Enter task index: ");
+				int indexToDelete = Integer.parseInt(input.nextLine()) - 1;
+				todoList.deleteTask(indexToDelete);
+				displayList(todoList);
+				break;
+				case(MOVE_TASK_UP):
+					cleanScreen();
+				System.out.println("Enter task index: ");
+				int indexToMoveUp = Integer.parseInt(input.nextLine()) - 1;
+				todoList.moveUp(indexToMoveUp);
+				displayList(todoList);
+				break;
+				case(MOVE_TASK_DOWN):
+					cleanScreen();
+				System.out.println("Enter task index: ");
+				int indexToMoveDown = Integer.parseInt(input.nextLine()) - 1;
+				todoList.moveDown(indexToMoveDown);
+				displayList(todoList);
+				break;
+				case(EDIT_TASK):
+					cleanScreen();
+				System.out.println("Enter task index: ");
+				int indexToEdit = Integer.parseInt(input.nextLine()) - 1;
+				System.out.println("Enter a new task title: ");
+				String editTaskTitle = input.nextLine(); 
+				System.out.println("Enter a new task detail: ");
+				String editTaskDetail = input.nextLine();
+				todoList.editTask(indexToEdit, editTaskTitle, editTaskDetail);
+				displayList(todoList);
+				break;
+				case(QUIT):
+					System.out.println("Program Ended.");
+				    running = false;
+				    break;
+				default:
+					System.err.println("Invalid command. Try again.");	
+				}
+			} catch (NumberFormatException e) {
+				System.err.println("Invalid input. Please enter a number.");
+			} catch (IndexOutOfBoundsException e) {
+				System.err.println("Index out of bounds. Please enter a valid task index.");
+			} catch (Exception e) {
+				System.err.println("Unexpected error. " + e.getMessage());
 			}
 		}
 		
-		
+		input.close();
 		
 		
 	}
+	
+	public static void cleanScreen() {
+		for (int i = 0; i < 50; i++) {
+			System.out.println();
+		}
+	}
 
+	public static void printPrompts() {
+		System.out.println("Enter a command: ");
+		System.out.println("[0] Quit");
+		System.out.println("[1] Add Task");
+		System.out.println("[2] Delete Task");
+		System.out.println("[3] Move Task Up");
+		System.out.println("[4] Move Task Down");
+		System.out.println("[5] Edit Task");
+		System.out.println("[6] Start");
+		System.out.println("------------------------");
+		
+	}
+	
+	public static void skipLine() {
+		for (int i = 0; i < 5; i++) {
+			System.out.println();
+		}
+	}
+	
+	public static void displayList(TodoList list) {
+		skipLine();
+	 	System.out.println("------------------------");
+	 	list.printList();
+	 	System.out.println("------------------------");
+	}
 }

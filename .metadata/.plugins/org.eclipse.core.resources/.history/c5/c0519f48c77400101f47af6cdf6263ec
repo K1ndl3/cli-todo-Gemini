@@ -1,0 +1,56 @@
+package myTodoApp;
+
+import java.util.Scanner;
+
+public class Main {
+
+	public static void main(String[] args) {
+		final int QUIT = 0;
+		final int ADD_TASK = 1;
+		final int DELETE_TASK = 2;
+		final int MOVE_TASK_UP = 3;
+		final int MOVE_TASK_DOWN = 4;
+		final int EDIT_TASK = 5;
+		final int START = 6;
+		boolean running = false;
+		TodoList todoList = new TodoList();
+		System.out.println("Welcome Huy. Lets start your to-do list for today. Input 6 to start.");
+		Scanner input = new Scanner(System.in);
+		int userStartCommand = input.nextInt();
+		if (userStartCommand == 6) {
+			running = true;
+		}
+		printPrompts();
+		/*while (running) {
+			printPrompts();
+			int userChoice = input.nextInt();
+			todoList.printList();
+			switch(userChoice) {
+				 case(ADD_TASK):
+					 
+			}
+		}*/
+		
+		
+		
+		
+	}
+	
+	public static void cleanScreen() {
+		for (int i = 0; i < 50; i++) {
+			System.out.println();
+		}
+	}
+
+	public static void printPrompts() {
+		System.out.println("Enter a command: ");
+		System.out.println("[0] Quit");
+		System.out.println("[1] Add Task");
+		System.out.println("[2] Delete Task");
+		System.out.println("[3] Move Task Up");
+		System.out.println("[4] Move Task Down");
+		System.out.println("[5] Edit Task");
+		System.out.println("[6] Start");
+		
+	}
+}
