@@ -11,7 +11,8 @@ public class Main {
 		final int MOVE_TASK_UP = 3;
 		final int MOVE_TASK_DOWN = 4;
 		final int EDIT_TASK = 5;
-		final int START = 6;
+		
+		final int START = 9;
 		
 		
 		
@@ -107,7 +108,7 @@ public class Main {
 		System.out.println("[3] Move Task Up");
 		System.out.println("[4] Move Task Down");
 		System.out.println("[5] Edit Task");
-		System.out.println("[6] Start");
+		System.out.println("[9] Start");
 		System.out.println("------------------------");
 		
 	}

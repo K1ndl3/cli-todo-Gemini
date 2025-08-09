@@ -1,7 +1,9 @@
 package myTodoApp;
  
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -76,8 +78,8 @@ public class TodoList {
 			System.out.println("╔══════════════╗");
 			System.out.println(String.format("║ Task  %-2d     ║", i+1));
 			System.out.println("╚══════════════╝");
-			System.out.println("→ Title:  " + tasksList.get(i).getTaskTitle());
-			System.out.println("→ Detail: " + tasksList.get(i).getTaskDetail());
+			System.out.println("-> Title:  " + tasksList.get(i).getTaskTitle());
+			System.out.println("-> Detail: " + tasksList.get(i).getTaskDetail());
 
 		}
 		
@@ -88,7 +90,20 @@ public class TodoList {
 	}
 	
 	public void readFromFile() {
+		List<Task> newTaskArr = new ArrayList<Task>();
 		try(BufferedReader reader = new BufferedReader(new FileReader("tasks.txt"))) {
+			String line;
+			while ((line = reader.readLine()) != null) {
+				String[] parts = line.split("\\|", 2);
+				if (parts.length == 2) {
+					String title = parts[0].trim();
+					String detail = parts[1].trim();
+					newTaskArr.add(new Task(title,detail));
+				} else {
+					System.err.println("ERROR: Cannot read from malformed line. (CODE: READFROMFILE)");
+				}
+			}
+			this.tasksList = newTaskArr;
 			
 		} catch (Exception e) {
 			System.out.println("Error: Cannot read from file.(CODE: READFROMFILE)");
@@ -96,6 +111,15 @@ public class TodoList {
 	}
 	
 	public void writeToFile() {
-		
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/TodoSave.txt"))){
+			for (int i = 0; i < tasksList.size(); i++) {
+				writer.write(tasksList.get(i).getTaskTitle());
+				writer.write("|");
+				writer.write(tasksList.get(i).getTaskDetail());
+				writer.newLine();
+			}
+		} catch (Exception e) {
+			System.err.println("ERROR: Cannot write to file.(CODE: WRITETOFILE)");
+		}
 	}
 }
