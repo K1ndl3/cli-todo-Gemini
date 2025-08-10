@@ -11,14 +11,16 @@ public class Main {
 		final int MOVE_TASK_UP = 3;
 		final int MOVE_TASK_DOWN = 4;
 		final int EDIT_TASK = 5;
-		
+		final int SAVE_TASK = 6;
+		final int LOAD_TASK = 7;
+		final int DISPLAY_LIST = 8;
 		final int START = 9;
 		
 		
 		
 		boolean running = false;
 		TodoList todoList = new TodoList();
-		System.out.println("Welcome Huy. Lets start your to-do list for today. Input 6 to start.");
+		System.out.println("Welcome Huy. Lets start your to-do list for today. Press 9 to start.");
 		Scanner input = new Scanner(System.in);
 		System.out.println("------------------------");
 		int userStartCommand = input.nextInt();
@@ -34,45 +36,63 @@ public class Main {
 				switch(userChoice) {
 				case(ADD_TASK):
 					cleanScreen();
-				System.out.println("Enter the task title: ");
-				String taskTitle = input.nextLine();
-				System.out.println("Enter the task details: ");
-				String taskDetail = input.nextLine();
-				todoList.addTask(taskTitle, taskDetail);
-				displayList(todoList);
-				break;
+					System.out.println("Enter the task title: ");
+					String taskTitle = input.nextLine();
+					System.out.println("Enter the task details: ");
+					String taskDetail = input.nextLine();
+					todoList.addTask(taskTitle, taskDetail);
+					displayList(todoList);
+					break;
 				case(DELETE_TASK):
 					cleanScreen();
-				System.out.println("Enter task index: ");
-				int indexToDelete = Integer.parseInt(input.nextLine()) - 1;
-				todoList.deleteTask(indexToDelete);
-				displayList(todoList);
-				break;
+					System.out.println("Enter task index: ");
+					int indexToDelete = Integer.parseInt(input.nextLine()) - 1;
+					todoList.deleteTask(indexToDelete);
+					displayList(todoList);
+					break;
 				case(MOVE_TASK_UP):
 					cleanScreen();
-				System.out.println("Enter task index: ");
-				int indexToMoveUp = Integer.parseInt(input.nextLine()) - 1;
-				todoList.moveUp(indexToMoveUp);
-				displayList(todoList);
-				break;
+					System.out.println("Enter task index: ");
+					int indexToMoveUp = Integer.parseInt(input.nextLine()) - 1;
+					todoList.moveUp(indexToMoveUp);
+					displayList(todoList);
+					break;
 				case(MOVE_TASK_DOWN):
 					cleanScreen();
-				System.out.println("Enter task index: ");
-				int indexToMoveDown = Integer.parseInt(input.nextLine()) - 1;
-				todoList.moveDown(indexToMoveDown);
-				displayList(todoList);
-				break;
+					System.out.println("Enter task index: ");
+					int indexToMoveDown = Integer.parseInt(input.nextLine()) - 1;
+					todoList.moveDown(indexToMoveDown);
+					displayList(todoList);
+					break;
 				case(EDIT_TASK):
 					cleanScreen();
-				System.out.println("Enter task index: ");
-				int indexToEdit = Integer.parseInt(input.nextLine()) - 1;
-				System.out.println("Enter a new task title: ");
-				String editTaskTitle = input.nextLine(); 
-				System.out.println("Enter a new task detail: ");
-				String editTaskDetail = input.nextLine();
-				todoList.editTask(indexToEdit, editTaskTitle, editTaskDetail);
-				displayList(todoList);
-				break;
+					System.out.println("Enter task index: ");
+					int indexToEdit = Integer.parseInt(input.nextLine()) - 1;
+					System.out.println("Enter a new task title: ");
+					String editTaskTitle = input.nextLine(); 
+					System.out.println("Enter a new task detail: ");
+					String editTaskDetail = input.nextLine();
+					todoList.editTask(indexToEdit, editTaskTitle, editTaskDetail);
+					displayList(todoList);
+					break;
+				case(SAVE_TASK):
+					cleanScreen();
+					todoList.writeToFile();
+					System.out.println("------------------------");
+					System.out.println("Saved todo list to TodoSave.txt");
+					System.out.println("------------------------");
+					break;
+				case(LOAD_TASK):
+					cleanScreen();
+					System.out.println("------------------------");
+					todoList.readFromFile();
+					System.out.println("Read from save file");
+					System.out.println("------------------------");
+					break;
+				case(DISPLAY_LIST):
+					cleanScreen();
+					displayList(todoList);
+					break;
 				case(QUIT):
 					System.out.println("Program Ended.");
 				    running = false;
@@ -108,6 +128,9 @@ public class Main {
 		System.out.println("[3] Move Task Up");
 		System.out.println("[4] Move Task Down");
 		System.out.println("[5] Edit Task");
+		System.out.println("[6] Save Task");
+		System.out.println("[7] Load Task");
+		System.out.println("[8] Display To-Do List");	
 		System.out.println("[9] Start");
 		System.out.println("------------------------");
 		

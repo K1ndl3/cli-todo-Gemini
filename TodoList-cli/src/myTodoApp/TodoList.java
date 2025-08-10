@@ -91,7 +91,7 @@ public class TodoList {
 	
 	public void readFromFile() {
 		List<Task> newTaskArr = new ArrayList<Task>();
-		try(BufferedReader reader = new BufferedReader(new FileReader("tasks.txt"))) {
+		try(BufferedReader reader = new BufferedReader(new FileReader("src/TodoSave.txt"))) {
 			String line;
 			while ((line = reader.readLine()) != null) {
 				String[] parts = line.split("\\|", 2);
@@ -106,11 +106,13 @@ public class TodoList {
 			this.tasksList = newTaskArr;
 			
 		} catch (Exception e) {
-			System.out.println("Error: Cannot read from file.(CODE: READFROMFILE)");
+			System.err.println("Error: Cannot read from file.(CODE: READFROMFILE)");
+			e.printStackTrace();
 		}
 	}
 	
 	public void writeToFile() {
+		if (tasksList.isEmpty()) return;
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/TodoSave.txt"))){
 			for (int i = 0; i < tasksList.size(); i++) {
 				writer.write(tasksList.get(i).getTaskTitle());
