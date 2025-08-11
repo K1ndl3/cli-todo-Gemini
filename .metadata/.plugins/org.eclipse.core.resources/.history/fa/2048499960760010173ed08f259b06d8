@@ -1,0 +1,19 @@
+package myTodoApp;
+
+
+import com.google.genai.Client;
+import com.google.genai.types.GenerateContentResponse;
+
+public class GenerateTextFromInput {
+  public void getAPIString() {
+    Client client = new Client(); // Uses GEMINI_API_KEY from environment
+
+    GenerateContentResponse response = client.models.generateContent(
+        "gemini-2.5-flash",
+        "how long do you take in seconds per response given that the response is about 20 words",
+        null);
+
+    System.out.println(response.text());
+  }
+}
+

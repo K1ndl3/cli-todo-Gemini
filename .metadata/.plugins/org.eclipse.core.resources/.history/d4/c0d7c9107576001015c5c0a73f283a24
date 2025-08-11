@@ -1,0 +1,22 @@
+package myTodoApp;
+
+
+import org.jspecify.annotations.Nullable;
+
+import com.google.genai.Client;
+import com.google.genai.types.GenerateContentResponse;
+
+public class GenerateTextFromInput {
+  public String getAPIString() {
+    try (Client client = new Client()) {
+		GenerateContentResponse response = client.models.generateContent(
+		    "gemini-2.5-flash",
+		    "how long do you take in seconds per response given that the response is about 20 words",
+		    null);
+
+		return response.text();
+	}
+    
+  }
+}
+

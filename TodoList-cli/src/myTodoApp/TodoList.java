@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -90,25 +92,28 @@ public class TodoList {
 	}
 	
 	public void readFromFile() {
-		List<Task> newTaskArr = new ArrayList<Task>();
-		try(BufferedReader reader = new BufferedReader(new FileReader("src/TodoSave.txt"))) {
-			String line;
-			while ((line = reader.readLine()) != null) {
-				String[] parts = line.split("\\|", 2);
-				if (parts.length == 2) {
-					String title = parts[0].trim();
-					String detail = parts[1].trim();
-					newTaskArr.add(new Task(title,detail));
-				} else {
-					System.err.println("ERROR: Cannot read from malformed line. (CODE: READFROMFILE)");
-				}
-			}
-			this.tasksList = newTaskArr;
-			
-		} catch (Exception e) {
-			System.err.println("Error: Cannot read from file.(CODE: READFROMFILE)");
-			e.printStackTrace();
-		}
+	    List<Task> newTaskArr = new ArrayList<>();
+	    Path jarDir = Paths.get(System.getProperty("user.dir"));
+	    Path saveFile = jarDir.resolve("src/TodoSave.txt");
+
+	    try (BufferedReader reader = new BufferedReader(new FileReader(saveFile.toString()))) {
+	        String line;
+	        while ((line = reader.readLine()) != null) {
+	            String[] parts = line.split("\\|", 2);
+	            if (parts.length == 2) {
+	                String title = parts[0].trim();
+	                String detail = parts[1].trim();
+	                newTaskArr.add(new Task(title, detail));
+	            } else {
+	                System.err.println("ERROR: Cannot read from malformed line. (CODE: READFROMFILE)");
+	            }
+	        }
+	        this.tasksList = newTaskArr;
+
+	    } catch (Exception e) {
+	        System.err.println("Error: Cannot read from file. (CODE: READFROMFILE)");
+	        e.printStackTrace();
+	    }
 	}
 	
 	public void writeToFile() {
