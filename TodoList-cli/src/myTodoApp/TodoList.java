@@ -17,8 +17,14 @@ public class TodoList {
 		this.tasksList = new ArrayList<Task>();
 	}
 	
-	public TodoList addTask(String taskTitle, String taskDetails) {
+	public List<Task> getTaskList() {
+		return tasksList;
+	}
+	
+	public TodoList addTask(String taskTitle, String taskDetails, int priorityRating) {
 		Task newTask = new Task(taskTitle, taskDetails);
+		newTask.setTaskID();
+		newTask.setPriorityRating(priorityRating);
 		tasksList.add(newTask);
 		System.out.println("SUCCESS: Added a task.");
 		return this;
@@ -82,6 +88,8 @@ public class TodoList {
 			System.out.println("╚══════════════╝");
 			System.out.println("-> Title:  " + tasksList.get(i).getTaskTitle());
 			System.out.println("-> Detail: " + tasksList.get(i).getTaskDetail());
+			System.out.println("-> ID: " + tasksList.get(i).getTaskID());
+			System.out.println("-> priority: " + tasksList.get(i).getPriorityRating());
 
 		}
 		
@@ -128,5 +136,22 @@ public class TodoList {
 		} catch (Exception e) {
 			System.err.println("ERROR: Cannot write to file.(CODE: WRITETOFILE)");
 		}
+	}
+	
+	public String parseListToStringsArrForPrompting(List<Task> inputTasks) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < inputTasks.size(); i++) {
+			sb.append(inputTasks.get(i).getTaskID());
+			sb.append("|");
+			sb.append(inputTasks.get(i).getTaskTitle());
+			sb.append("|");
+			sb.append(inputTasks.get(i).getTaskDetail());
+			
+			if (i < inputTasks.size() - 1) {
+				sb.append(",");
+			}
+		}	
+		String promptString = sb.toString();
+		return promptString;
 	}
 }

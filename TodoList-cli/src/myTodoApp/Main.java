@@ -15,6 +15,7 @@ public class Main {
 		final int LOAD_TASK = 7;
 		final int DISPLAY_LIST = 8;
 		final int START = 9;
+		final int AI_TEST = 10;
 		
 		
 		
@@ -40,7 +41,9 @@ public class Main {
 					String taskTitle = input.nextLine();
 					System.out.println("Enter the task details: ");
 					String taskDetail = input.nextLine();
-					todoList.addTask(taskTitle, taskDetail);
+					System.out.println("Enter the task urgency: 1-5");
+					int taskUrgency = Integer.parseInt(input.nextLine());
+					todoList.addTask(taskTitle, taskDetail, taskUrgency);
 					displayList(todoList);
 					break;
 				case(DELETE_TASK):
@@ -97,6 +100,12 @@ public class Main {
 					System.out.println("Program Ended.");
 				    running = false;
 				    break;
+				case(AI_TEST):
+					System.out.println("starting AI test: ");
+					GeminiAI genAI = new GeminiAI();
+					String response = genAI.getGeminiResponse(todoList.parseListToStringsArrForPrompting(todoList.getTaskList()));
+					System.out.println(response);
+					break;
 				default:
 					System.err.println("Invalid command. Try again.");	
 				}
@@ -132,6 +141,7 @@ public class Main {
 		System.out.println("[7] Load Task");
 		System.out.println("[8] Display To-Do List");	
 		System.out.println("[9] Start");
+		System.out.println("[10] AI-features");
 		System.out.println("------------------------");
 		
 	}

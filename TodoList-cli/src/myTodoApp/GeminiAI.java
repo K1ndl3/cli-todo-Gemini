@@ -3,20 +3,23 @@ import com.google.genai.Client;
 import com.google.genai.types.GenerateContentResponse;
 
 public class GeminiAI {
-	private String contextMessage = "You are given a list of tasks in the format: taskID|taskDetails. Each task is "
-			+ "seperated by a comma and there is a priority ranking from 1-5. 5 being the most urgent and 1 being optinonal"
-			+ "Your job is to sort the task from highest to lowest priority. If multiple tasks have the same priority, preserve"
-			+ "their original order. You are only to return the sorted list of taskIDs in array format"
-			+ "Example response: [task2, task5,task1]."
-			+ "Here is the input list of tasks: ";
+	private String contextMessage = "You are given tasks in the format: taskID|taskTitle|taskDetails|priority, separated by commas.\r\n"
+			+ "\r\n"
+			+ "Sort tasks by:"
+			+ "1. Priority (5 = most urgent)"
+			+ "2. If priorities match, use taskDetails urgency: due dates and time, preference for test>quiz"
+			+ "3. If still tied, preserve original order"
+			+ "4. Group same taskTitle together (consecutive) so can finish one subject before moving onto another"
+			+ "make sure to return the same number of tasks as was inputted"
+			+ "\r\n"
+			+ "Return ONLY the sorted array of taskIDs. No explanation. Example: [taskID, taskID, taskID]";
 	public GeminiAI() {}
 	
-	public String getGeminiResponse(String[] arr) {
-		  String listOfTask = "";
-		  String contextString = contextMessage + listOfTask ;
+	public String getGeminiResponse(String inputString) {
+		  String contextString = contextMessage + inputString ;
 		  try (Client client = new Client()) {
 			GenerateContentResponse response = client.models.generateContent(
-					  "gemini-2.5-flash",
+					  "gemini-2.5-flash-lite",
 					  contextString,
 					  null);
 			  
