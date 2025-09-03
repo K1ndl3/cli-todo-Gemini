@@ -16,6 +16,13 @@ public class Task {
 		this.taskDetail = taskDetails;
 	}
 	
+	public Task(String taskID, String taskTitle, String taskDetails, int priorityRating) {
+		this.taskID = taskID;
+		this.taskTitle = taskTitle;
+		this.taskDetail = taskDetails;
+		this.priorityRating = priorityRating;
+	}
+	
 	public String getTaskTitle() {
 		return this.taskTitle;
 	}
@@ -41,7 +48,7 @@ public class Task {
 	}
 	
 	public void setTaskID() {
-		String newID = "TASK_" + UUID.randomUUID().toString().substring(0,8);
+		String newID = "TASK_" + UUID.randomUUID().toString().substring(0,2);
 		this.taskID = newID;
 	}
 	

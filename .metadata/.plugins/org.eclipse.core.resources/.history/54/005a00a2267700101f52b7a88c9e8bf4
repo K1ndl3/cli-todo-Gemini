@@ -1,0 +1,30 @@
+package myTodoApp;
+import com.google.genai.Client;
+import com.google.genai.types.GenerateContentResponse;
+
+public class GeminiAI {
+	private String contextMessage = "You are given tasks in the format: taskID|taskTitle|taskDetails|priority, separated by commas.\r\n"
+			+ "\r\n"
+			+ "Sort tasks by:\r\n"
+			+ "1. Priority (5 = most urgent)\r\n"
+			+ "2. If priorities match, use taskDetails urgency: test > quiz > review\r\n"
+			+ "3. If still tied, preserve original order\r\n"
+			+ "4. Group same taskTitle together (consecutive)\r\n"
+			+ "make sure to return the same number of tasks as was inputted"
+			+ "\r\n"
+			+ "Return ONLY the sorted array of taskIDs. No explanation. Example: [taskID, taskID, taskID]";
+	public GeminiAI() {}
+	
+	public String getGeminiResponse(String inputString) {
+		  String contextString = contextMessage + inputString ;
+		  try (Client client = new Client()) {
+			GenerateContentResponse response = client.models.generateContent(
+					  "gemini-2.5-flash-pro",
+					  contextString,
+					  null);
+			  
+			  
+			  return response.text();
+		}
+	  }
+}

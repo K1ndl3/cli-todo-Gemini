@@ -4,6 +4,7 @@
 	<item key="org.eclipse.jdt.ui.last.selected.execution.enviroment" value="JavaSE-21"/>
 	<item key="org.eclipse.jdt.ui.last.selected.create.moduleinfo.comments" value="false"/>
 	<item key="org.eclipse.jdt.ui.last.selected.create.moduleinfo" value="false"/>
+	<item key="delegateUpdating" value="false"/>
 	<section name="org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart">
 		<item key="group_libraries" value="true"/>
 		<item key="layout" value="2"/>
@@ -76,9 +77,12 @@
 		<item key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION" value="C:\Users\hbui3\OneDrive\Desktop\Java-prj\Todo-cli"/>
 		<item key="FatJarPackageWizardPage.LIBRARY_HANDLING" value="2"/>
 		<item key="FatJarPackageWizardPage.LAUNCH_CONFIGURATION_SELECTION_NAME" value="Main - TodoList-cli"/>
-		<item key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION" value="TodoList-cli\Todolist.jar"/>
+		<item key="FatJarPackageWizardPage.DESTINATION_PATH_SELECTION" value="C:\Users\hbui3\OneDrive\Desktop\Todo-cli\TodoList2.jar"/>
 		<list key="FatJarPackageWizardPage.DESTINATION_NAMES_ID">
+			<item value="C:\Users\hbui3\OneDrive\Desktop\Todo-cli\TodoList2.jar"/>
 			<item value="TodoList-cli/Todolist.jar"/>
+			<item value="C:\Users\hbui3\OneDrive\Desktop\Todo-cli\todoList.jar"/>
+			<item value="TodoList-cli\Todolist.jar"/>
 			<item value="C:\Users\hbui3\OneDrive\Desktop\todoList.jar"/>
 		</list>
 		<list key="FatJarPackageWizardPage.ANTSCRIPT_LOCATION_HISTORY">

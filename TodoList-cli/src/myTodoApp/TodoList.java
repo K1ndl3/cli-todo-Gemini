@@ -4,15 +4,17 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class TodoList {
 	private List<Task> tasksList;
+	private Map<String,Task> taskMap = new HashMap<String, Task>();
 	public TodoList() {
 		this.tasksList = new ArrayList<Task>();
 	}
@@ -26,6 +28,7 @@ public class TodoList {
 		newTask.setTaskID();
 		newTask.setPriorityRating(priorityRating);
 		tasksList.add(newTask);
+		taskMap.put(newTask.getTaskID(), newTask);
 		System.out.println("SUCCESS: Added a task.");
 		return this;
 	}
@@ -35,7 +38,9 @@ public class TodoList {
 			System.err.println("ERROR: Invalid index. Try again.(CODE: DELETE)");
 			return this;
 		}
+		Task curTask = tasksList.get(indexOfTask);
 		tasksList.remove(indexOfTask);
+		taskMap.remove(curTask.getTaskID());
 		System.out.println("SUCCESS: Deleted task at index: " + indexOfTask);
 		return this;
 	}
@@ -99,12 +104,36 @@ public class TodoList {
 		return tasksList.size();
 	}
 	
+	public void readFromFile(String filePath) {
+		List<Task> newTaskArr = new ArrayList<Task>();
+		try (BufferedReader reader = new BufferedReader(new FileReader(filePath))){
+			String line;
+			while((line = reader.readLine()) != null) {
+				String[] attributes = Arrays.stream(line.split("\\|", 4))
+                        .map(String::trim)
+                        .toArray(String[]::new);
+
+				if (attributes.length == 4) {
+					// first part is ID then title then detail then priority
+					Task newTask = new Task(attributes[0], attributes[1], attributes[2], Integer.parseInt(attributes[3]));
+					newTaskArr.add(newTask);
+					taskMap.put(newTask.getTaskID(), newTask);
+				} else {
+					System.err.println("ERROR: Cannot read from malformed line. (CODE: READFROMFILE)");
+				}
+			}
+			this.tasksList = newTaskArr;
+			
+		} catch (Exception e) {
+			System.err.println("EROR: Cannot read from file. (CODE: READFROMFILE)");
+			e.printStackTrace();
+		}
+	}
+	
 	public void readFromFile() {
 	    List<Task> newTaskArr = new ArrayList<>();
-	    Path jarDir = Paths.get(System.getProperty("user.dir"));
-	    Path saveFile = jarDir.resolve("src/TodoSave.txt");
-
-	    try (BufferedReader reader = new BufferedReader(new FileReader(saveFile.toString()))) {
+	    
+	    try (BufferedReader reader = new BufferedReader(new FileReader("src/TodoSave.txt"))) {
 	        String line;
 	        while ((line = reader.readLine()) != null) {
 	            String[] parts = line.split("\\|", 2);
@@ -138,6 +167,24 @@ public class TodoList {
 		}
 	}
 	
+	public void writeToFile(String filePath) {
+		try(BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+			for (int i = 0; i < tasksList.size(); i++) {
+				Task curTask = tasksList.get(i);
+				writer.write(curTask.getTaskID());
+				writer.write("|");
+				writer.write(curTask.getTaskTitle());
+				writer.write("|");
+				writer.write(curTask.getTaskDetail());
+				writer.write("|");
+				writer.write(Integer.toString(curTask.getPriorityRating()));
+				writer.newLine();
+			}
+		} catch (Exception e) {
+			System.err.println("ERROR: Cannot write to file. (CODE: WRITETOFILE)");
+		}
+	}
+	
 	public String parseListToStringsArrForPrompting(List<Task> inputTasks) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i < inputTasks.size(); i++) {
@@ -154,4 +201,33 @@ public class TodoList {
 		String promptString = sb.toString();
 		return promptString;
 	}
+	
+	public TodoList reorderTaskByAIResponse(String response) {
+		String cleaned = response.trim().replaceAll("[\\[\\]\"']", "");
+		List<Task> semanticSortedList = new ArrayList<Task>();
+		String[] arrayOfTaskID = cleaned.split(",");
+		if (arrayOfTaskID.length != tasksList.size()) {
+			System.err.println("ERROR: Malformed AI reponse. Try again. (CODE: REORDERTASKBYAIREPONSE)");
+		}
+		for (int i = 0; i < tasksList.size(); i++) {
+			arrayOfTaskID[i] = arrayOfTaskID[i].trim();
+			Task currTask = taskMap.get(arrayOfTaskID[i]);
+			arrayOfTaskID[i] = arrayOfTaskID[i].replaceAll("\\p{C}", "");
+			if (currTask != null) {
+				semanticSortedList.add(currTask);				
+			} else {
+				System.err.println("ERROR: TaskID not found in map. (CODE: REORDERTASKBYAIRESPONSE)" + arrayOfTaskID[i]);
+			}
+		}
+		tasksList = semanticSortedList;
+		System.out.println("SUCCESS: Reordered list by AI suggestion.");
+		return this;
+	}
+	
+	public void printMap() {
+		for (Map.Entry<String, Task> entry : taskMap.entrySet()) {
+		    System.out.println("ID: " + entry.getKey() + " → " + entry.getValue());
+		}
+	}
+	
 }

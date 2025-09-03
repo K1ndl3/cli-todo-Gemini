@@ -1,3 +1,5 @@
-java|finish studying for java test tommorow
-groceries|go buy water
-gym|go to the gym before night time
+TASK_0c|java|finish coding assignment due tmr|5
+TASK_03|java|finish taking notes on today's lecture|5
+TASK_42|grocery|go get grocery from the store|1
+TASK_30|assembly|finish assignment due tonight|5
+TASK_f9|physics|study for physics exam that is tommorow|4

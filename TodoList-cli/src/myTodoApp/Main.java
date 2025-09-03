@@ -16,6 +16,8 @@ public class Main {
 		final int DISPLAY_LIST = 8;
 		final int START = 9;
 		final int AI_TEST = 10;
+		final String SAVE_LOAD_TASK_PATH = "src/TodoSave.txt";
+				
 		
 		
 		
@@ -80,15 +82,15 @@ public class Main {
 					break;
 				case(SAVE_TASK):
 					cleanScreen();
-					todoList.writeToFile();
+					todoList.writeToFile(SAVE_LOAD_TASK_PATH);
 					System.out.println("------------------------");
 					System.out.println("Saved todo list to TodoSave.txt");
 					System.out.println("------------------------");
 					break;
 				case(LOAD_TASK):
 					cleanScreen();
+				todoList.readFromFile(SAVE_LOAD_TASK_PATH);
 					System.out.println("------------------------");
-					todoList.readFromFile();
 					System.out.println("Read from save file");
 					System.out.println("------------------------");
 					break;
@@ -103,8 +105,11 @@ public class Main {
 				case(AI_TEST):
 					System.out.println("starting AI test: ");
 					GeminiAI genAI = new GeminiAI();
-					String response = genAI.getGeminiResponse(todoList.parseListToStringsArrForPrompting(todoList.getTaskList()));
-					System.out.println(response);
+					String response = genAI.getGeminiResponse(todoList.parseListToStringsArrForPrompting(todoList.getTaskList()), todoList.getListSize());
+					todoList.reorderTaskByAIResponse(response);
+					todoList.printMap();
+					genAI.geminiTestForJar();
+					System.out.println("Working dir: " + System.getProperty("user.dir"));
 					break;
 				default:
 					System.err.println("Invalid command. Try again.");	
@@ -114,7 +119,6 @@ public class Main {
 			} catch (IndexOutOfBoundsException e) {
 				System.err.println("Index out of bounds. Please enter a valid task index.");
 			} catch (Exception e) {
-				System.err.println("Unexpected error. " + e.getMessage());
 			}
 		}
 		
